@@ -30,8 +30,20 @@ export function add(numbers = '') {
     throw new Error('delimiters messed up');
   }
 
-  return formattedNonEmpty
+  var formattedNumbers = formattedNonEmpty
     .filter(n => n !== '')
-    .map(Number)
+    .map(Number);
+
+  var formattedNegativeNumbers = formattedNumbers.filter(n => n < 0);
+
+  if (formattedNegativeNumbers.length === 1) {
+    throw new Error('negatives not allowed');
+  }
+
+  if (formattedNegativeNumbers.length > 1) {
+    throw new Error('negatives not allowed: ' + formattedNegativeNumbers.join(', '));
+  }
+
+  return formattedNumbers
     .reduce((acc, n) => acc + n, 0);
 }

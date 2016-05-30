@@ -36,4 +36,21 @@ describe('kata', () => {
   it('supports different delimiters', () => {
     expect(add('//;\n1;2')).toBe(3);
   });
+
+  it('throw error if input contains negative numbers', () => {
+    function fn() {
+      add('1,-4');
+    }
+
+    expect(fn).toThrowError('negatives not allowed');
+  });
+
+  it('throw error if input contains negative numbers', () => {
+    function fn() {
+      add('//;\n-1;2;-4');
+    }
+
+    expect(fn).toThrowError('negatives not allowed: -1, -4');
+  });
+
 });
