@@ -1,29 +1,14 @@
-export function add(numbers = '') {
-  const delimiterRegexp = /\/\/(.*?)\n(.*)/;
-  const multiDelimiterRegexp = /\[(.*?)\]/g;
-  let delimiters = ',';
-
-  if (delimiterRegexp.test(numbers)) {
-    let [, newDelimiter, newInput] = numbers.match(delimiterRegexp);
-
-
-    // multi delimiter case
-    let multiDelimiters = [];
-    let results;
-
-    // eslint-disable-next-line
-    while (results = multiDelimiterRegexp.exec(newDelimiter)) {
-      multiDelimiters = [...multiDelimiters, results[1]];
-    }
-
-    delimiters = multiDelimiters.length ? [...multiDelimiters] : [newDelimiter];
-
-    numbers = newInput;
+export function add(input) {
+  if (typeof input === 'undefined') {
+    return 0;
   }
 
-  numbers = numbers.trim();
+  const parsedResult = parseInput(input);
 
-  if (numbers.length === 0) {
+  input = parsedResult.input;
+  let delimiters = parsedResult.delimiters.length ? parsedResult.delimiters : [','];
+
+  if (input.length === 0) {
     return 0;
   }
 
@@ -31,7 +16,7 @@ export function add(numbers = '') {
   delimiters = [...delimiters, '\n'];
   const SUPER_DELIMITER = '__SUPER_DELIMITER__';
 
-  var formatted = replaceMultiple(numbers, delimiters, SUPER_DELIMITER)
+  var formatted = replaceMultiple(input, delimiters, SUPER_DELIMITER)
     .split(SUPER_DELIMITER)
     .map(n => n.trim());
 
@@ -63,6 +48,36 @@ export function add(numbers = '') {
   return formattedNumbers
     .filter(n => n <= 1000)
     .reduce((acc, n) => acc + n, 0);
+}
+
+/**
+ * Parse input and return real input and delimiters
+ */
+export function parseInput(input) {
+  const delimiterRegexp = /\/\/(.*?)\n(.*)/;
+  const multiDelimiterRegexp = /\[(.*?)\]/g;
+
+  // string withou delimiter syntax
+  if (!delimiterRegexp.test(input)) {
+    return { input: input.trim(), delimiters: [] };
+  }
+
+  let [, delimitersStr, realInput] = input.match(delimiterRegexp);
+
+
+  // multi delimiter case
+  let multiDelimiters = [];
+  let results;
+
+  // eslint-disable-next-line
+  while (results = multiDelimiterRegexp.exec(delimitersStr)) {
+    multiDelimiters = [...multiDelimiters, results[1]];
+  }
+
+  return {
+    input: realInput.trim(),
+    delimiters: multiDelimiters.length ? multiDelimiters : [delimitersStr]
+  };
 }
 
 export function replaceMultiple(str, substrings, replaceWith) {

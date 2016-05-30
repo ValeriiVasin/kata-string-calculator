@@ -1,4 +1,4 @@
-import { add, replaceMultiple } from '../kata';
+import { add, parseInput, replaceMultiple } from '../kata';
 
 describe('kata', () => {
   it('returns zero if none arguments provided', () => {
@@ -78,5 +78,35 @@ describe('multi delimiter replacer', () => {
 
   it('replaces few delimiters correctly', () => {
     expect(replaceMultiple('123;456%789', [';', '%'], 'h')).toBe('123h456h789');
+  });
+});
+
+describe('parse input', () => {
+  it('parses input without delimiters correctly', () => {
+    expect(parseInput('123')).toEqual({ input: '123', delimiters: [] });
+  });
+
+  it('parses input with single delimiter correctly', () => {
+    expect(parseInput('//;\n123')).toEqual({ input: '123', delimiters: [';'] });
+  });
+
+  it('parses input with single multi-character delimiter correctly', () => {
+    expect(parseInput('//xyz\n123')).toEqual({ input: '123', delimiters: ['xyz'] });
+  });
+
+  it('parses input with multiple delimiters correctly', () => {
+    expect(parseInput('//[x][y]\n123')).toEqual({ input: '123', delimiters: ['x', 'y'] });
+  });
+
+  it('parses input with multiple multi-character delimiters correctly', () => {
+    expect(parseInput('//[xyz][abc]\n123')).toEqual({ input: '123', delimiters: ['xyz', 'abc'] });
+  });
+
+  it('trims parsed input (single delimiter)', () => {
+    expect(parseInput('//;\n 123 ')).toEqual({ input: '123', delimiters: [';'] })
+  });
+
+  it('trims parsed input (multi delimiters)', () => {
+    expect(parseInput('//[;][&]\n 123 ')).toEqual({ input: '123', delimiters: [';', '&'] })
   });
 });
