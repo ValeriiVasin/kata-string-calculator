@@ -65,6 +65,10 @@ describe('kata', () => {
   it('handles few delimiters sytax properly', () => {
     expect(add('//[*][%]\n1*2%3')).toBe(6);
   });
+
+  it('possible to set few multi-character delimiters', () => {
+    expect(add('//[***][*+*]\n1***2*+*3')).toBe(6);
+  });
 });
 
 describe('multi delimiter replacer', () => {
