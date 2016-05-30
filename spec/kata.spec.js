@@ -24,4 +24,12 @@ describe('kata', () => {
   it('works when \\n is used instead of comma', () => {
     expect(add('1\n2,3')).toBe(6);
   });
+
+  it('does not work when two delimiters next to each other', () => {
+    function fn() {
+      add('1,\n');
+    }
+
+    expect(fn).toThrow();
+  });
 });
