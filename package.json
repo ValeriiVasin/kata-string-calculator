@@ -1,0 +1,16 @@
+{
+  "name": "kata-string-calculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run jasmine",
+    "jasmine": "jasmine"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^2.11.0",
+    "jasmine": "^2.4.1"
+  }
+}
