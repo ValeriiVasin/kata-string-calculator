@@ -20,4 +20,8 @@ describe('kata', () => {
   it('works for untrimmed input', () => {
     expect(add('1,     123   ')).toBe(124);
   });
+
+  it('works when \\n is used instead of comma', () => {
+    expect(add('1\n2,3')).toBe(6);
+  });
 });

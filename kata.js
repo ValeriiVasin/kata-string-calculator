@@ -1,5 +1,6 @@
 export function add(numbers = '') {
   return numbers
+    .replace('\n', ',')
     .split(',')
     .map(n => n.trim())
     .filter(n => n !== '')
