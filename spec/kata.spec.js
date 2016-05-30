@@ -1,5 +1,7 @@
+import { add } from '../kata';
+
 describe('kata', () => {
   it('works', () => {
-    expect(1).toBe(1);
+    expect(add()).toBe(true);
   });
 });
