@@ -1,4 +1,4 @@
-import { add } from '../kata';
+import { add, replaceMultiple } from '../kata';
 
 describe('kata', () => {
   it('returns zero if none arguments provided', () => {
@@ -60,5 +60,19 @@ describe('kata', () => {
 
   it('handles multi-character delimiters properly', () => {
     expect(add('//***\n1***2***3')).toBe(6);
+  });
+
+  xit('handles few delimiters sytax properly', () => {
+    expect(add('//[*][%]\n1*2%3')).toBe(6);
+  });
+});
+
+describe('multi delimiter replacer', () => {
+  it('replaces one delimiter correctly', () => {
+    expect(replaceMultiple('123;456;789', ';', 'h')).toEqual('123h456h789');
+  });
+
+  it('replaces few delimiters correctly', () => {
+    expect(replaceMultiple('123;456%789', [';', '%'], 'h')).toBe('123h456h789');
   });
 });

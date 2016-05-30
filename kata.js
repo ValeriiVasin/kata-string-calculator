@@ -1,10 +1,11 @@
 export function add(numbers = '') {
   const delimiterRegexp = /\/\/(.*?)\n(.*)/;
-  let delimiter = ',';
+  // const multiDelimiterRegexp = //;
+  let delimiters = ',';
 
   if (delimiterRegexp.test(numbers)) {
     let [, newDelimiter, newInput] = numbers.match(delimiterRegexp);
-    delimiter = newDelimiter;
+    delimiters = [newDelimiter];
     numbers = newInput;
   }
 
@@ -14,9 +15,12 @@ export function add(numbers = '') {
     return 0;
   }
 
-  var formatted = numbers
-    .replace('\n', delimiter)
-    .split(delimiter)
+  // add \n to delimiters
+  delimiters = [...delimiters, '\n'];
+  const SUPER_DELIMITER = '__SUPER_DELIMITER__';
+
+  var formatted = replaceMultiple(numbers, delimiters, SUPER_DELIMITER)
+    .split(SUPER_DELIMITER)
     .map(n => n.trim());
 
   if (formatted.length === 0) {
@@ -47,4 +51,22 @@ export function add(numbers = '') {
   return formattedNumbers
     .filter(n => n <= 1000)
     .reduce((acc, n) => acc + n, 0);
+}
+
+export function replaceMultiple(str, substrings, replaceWith) {
+  if (!Array.isArray(substrings)) {
+    substrings = [substrings];
+  }
+
+  return substrings.reduce((str, substring) => {
+    let prevResult;
+    let result = str;
+
+    do {
+      prevResult = result;
+      result = result.replace(substring, replaceWith);
+    } while (prevResult !== result);
+
+    return result;
+  }, str);
 }
