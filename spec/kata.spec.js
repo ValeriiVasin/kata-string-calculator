@@ -53,4 +53,8 @@ describe('kata', () => {
     expect(fn).toThrowError('negatives not allowed: -1, -4');
   });
 
+  it('filters numbers greater then 1000', () => {
+    expect(add('2, 1000')).toBe(1002);
+    expect(add('2, 1001')).toBe(2);
+  });
 });

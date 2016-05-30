@@ -45,5 +45,6 @@ export function add(numbers = '') {
   }
 
   return formattedNumbers
+    .filter(n => n <= 1000)
     .reduce((acc, n) => acc + n, 0);
 }
