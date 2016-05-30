@@ -57,4 +57,8 @@ describe('kata', () => {
     expect(add('2, 1000')).toBe(1002);
     expect(add('2, 1001')).toBe(2);
   });
+
+  it('handles multi-character delimiters properly', () => {
+    expect(add('//***\n1***2***3')).toBe(6);
+  });
 });
