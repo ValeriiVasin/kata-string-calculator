@@ -14,38 +14,33 @@ export function add(input) {
 
   // add \n to delimiters
   delimiters = [...delimiters, '\n'];
-  const SUPER_DELIMITER = '__SUPER_DELIMITER__';
 
-  var formatted = replaceMultiple(input, delimiters, SUPER_DELIMITER)
-    .split(SUPER_DELIMITER)
-    .map(n => n.trim());
+  const splitted = splitBy(input, delimiters).map(n => n.trim());
 
-  if (formatted.length === 0) {
+  if (splitted.length === 0) {
     return 0;
   }
 
-  var formattedNonEmpty = formatted
-    .filter(n => n !== '');
+  const splittedNonEmpty = splitted.filter(n => n !== '');
 
-  if (formatted.length !== formattedNonEmpty.length) {
+  if (splitted.length !== splittedNonEmpty.length) {
     throw new Error('delimiters messed up');
   }
 
-  var formattedNumbers = formattedNonEmpty
-    .filter(n => n !== '')
-    .map(Number);
+  const numbers = splittedNonEmpty.map(Number);
 
-  var formattedNegativeNumbers = formattedNumbers.filter(n => n < 0);
+  // handle negative numbers
+  const negativeNumbers = numbers.filter(n => n < 0);
 
-  if (formattedNegativeNumbers.length === 1) {
+  if (negativeNumbers.length === 1) {
     throw new Error('negatives not allowed');
   }
 
-  if (formattedNegativeNumbers.length > 1) {
-    throw new Error('negatives not allowed: ' + formattedNegativeNumbers.join(', '));
+  if (negativeNumbers.length > 1) {
+    throw new Error('negatives not allowed: ' + negativeNumbers.join(', '));
   }
 
-  return formattedNumbers
+  return numbers
     .filter(n => n <= 1000)
     .reduce((acc, n) => acc + n, 0);
 }
@@ -96,4 +91,17 @@ export function replaceMultiple(str, substrings, replaceWith) {
 
     return result;
   }, str);
+}
+
+/**
+ * Splits string by one or few delimiters
+ */
+export function splitBy(str, delimiters) {
+  const SECRET_DELIMITER = '__SECRET_DELIMITER__';
+
+  if (!Array.isArray(delimiters)) {
+    delimiters = [delimiters];
+  }
+
+  return replaceMultiple(str, delimiters, SECRET_DELIMITER).split(SECRET_DELIMITER)
 }

@@ -1,4 +1,4 @@
-import { add, parseInput, replaceMultiple } from '../kata';
+import { add, parseInput, replaceMultiple, splitBy } from '../kata';
 
 describe('kata', () => {
   it('returns zero if none arguments provided', () => {
@@ -108,5 +108,23 @@ describe('parse input', () => {
 
   it('trims parsed input (multi delimiters)', () => {
     expect(parseInput('//[;][&]\n 123 ')).toEqual({ input: '123', delimiters: [';', '&'] })
+  });
+});
+
+describe('splitBy', () => {
+  it('splits string by one delimiter correctly', () => {
+    expect(splitBy('123;456', ';')).toEqual(['123', '456']);
+  });
+
+  it('splits string by one element array delimiter correctly', () => {
+    expect(splitBy('123;456', [';'])).toEqual(['123', '456']);
+  });
+
+  it('splits string by multiple delimiters correctly', () => {
+    expect(splitBy('123;456%789', [';', '%'])).toEqual(['123', '456', '789']);
+  });
+
+  it('splits string when no matches correctly', () => {
+    expect(splitBy('123;456', '%')).toEqual(['123;456']);
   });
 });
