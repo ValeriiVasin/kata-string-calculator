@@ -14,10 +14,10 @@ describe('kata', () => {
   });
 
   it('works for empty strings in input', () => {
-    expect(add('', '1', '123')).toBe(124);
+    expect(add('1, 123')).toBe(124);
   });
 
   it('works for untrimmed input', () => {
-    expect(add('       ', '1      ', '  123   ')).toBe(124);
+    expect(add('1,     123   ')).toBe(124);
   });
 });

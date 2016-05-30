@@ -1,9 +1,6 @@
-export function add(...numbers) {
-  if (numbers.length === 0) {
-    return 0;
-  }
-
+export function add(numbers = '') {
   return numbers
+    .split(',')
     .map(n => n.trim())
     .filter(n => n !== '')
     .map(Number)
