@@ -1,11 +1,23 @@
 export function add(numbers = '') {
   const delimiterRegexp = /\/\/(.*?)\n(.*)/;
-  // const multiDelimiterRegexp = //;
+  const multiDelimiterRegexp = /\[(.*?)\]/g;
   let delimiters = ',';
 
   if (delimiterRegexp.test(numbers)) {
     let [, newDelimiter, newInput] = numbers.match(delimiterRegexp);
-    delimiters = [newDelimiter];
+
+
+    // multi delimiter case
+    let multiDelimiters = [];
+    let results;
+
+    // eslint-disable-next-line
+    while (results = multiDelimiterRegexp.exec(newDelimiter)) {
+      multiDelimiters = [...multiDelimiters, results[1]];
+    }
+
+    delimiters = multiDelimiters.length ? [...multiDelimiters] : [newDelimiter];
+
     numbers = newInput;
   }
 

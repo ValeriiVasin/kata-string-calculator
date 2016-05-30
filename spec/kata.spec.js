@@ -62,7 +62,7 @@ describe('kata', () => {
     expect(add('//***\n1***2***3')).toBe(6);
   });
 
-  xit('handles few delimiters sytax properly', () => {
+  it('handles few delimiters sytax properly', () => {
     expect(add('//[*][%]\n1*2%3')).toBe(6);
   });
 });
