@@ -1,4 +1,13 @@
 export function add(numbers = '') {
+  const delimiterRegexp = /\/\/(.*?)\n(.*)/;
+  let delimiter = ',';
+
+  if (delimiterRegexp.test(numbers)) {
+    let [, newDelimiter, newInput] = numbers.match(delimiterRegexp);
+    delimiter = newDelimiter;
+    numbers = newInput;
+  }
+
   numbers = numbers.trim();
 
   if (numbers.length === 0) {
@@ -6,8 +15,8 @@ export function add(numbers = '') {
   }
 
   var formatted = numbers
-    .replace('\n', ',')
-    .split(',')
+    .replace('\n', delimiter)
+    .split(delimiter)
     .map(n => n.trim());
 
   if (formatted.length === 0) {
@@ -18,7 +27,7 @@ export function add(numbers = '') {
     .filter(n => n !== '');
 
   if (formatted.length !== formattedNonEmpty.length) {
-    throw new Error('Bad shit !');
+    throw new Error('delimiters messed up');
   }
 
   return formattedNonEmpty

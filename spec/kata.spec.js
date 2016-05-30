@@ -32,4 +32,8 @@ describe('kata', () => {
 
     expect(fn).toThrow();
   });
+
+  it('supports different delimiters', () => {
+    expect(add('//;\n1;2')).toBe(3);
+  });
 });
