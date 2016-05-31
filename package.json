@@ -2,7 +2,7 @@
   "name": "kata-string-calculator",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "kata.js",
   "scripts": {
     "test": "npm run jasmine",
     "jasmine": "babel-node ./node_modules/.bin/jasmine",
